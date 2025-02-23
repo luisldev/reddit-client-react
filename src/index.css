@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+body {
+  font-family: "Onest Variable", sans-serif;
+}
+
+#content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "aside main"
+    "footer footer";
+  gap: 1rem;
+}
+
+#header {
+  grid-area: header;
+}
+
+#aside {
+  grid-area: aside;
+}
+
+#main {
+  grid-area: main;
+}
+
+#footer {
+  grid-area: footer;
+}
