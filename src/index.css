@@ -6,12 +6,12 @@ body {
 
 #content {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
-    "header header"
-    "aside main"
-    "footer footer";
+    "header"
+    "main"
+    "footer";
   gap: 1rem;
 }
 
@@ -19,12 +19,10 @@ body {
   grid-area: header;
 }
 
-#aside {
-  grid-area: aside;
-}
-
 #main {
   grid-area: main;
+  min-height: 0;
+  overflow: auto;
 }
 
 #footer {
