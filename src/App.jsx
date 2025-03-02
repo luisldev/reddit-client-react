@@ -14,7 +14,7 @@ function App() {
           <SubredditSearch />
         </header>
         {data && (
-          <main className='grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-6 my-4'>
+          <main className='grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(400px,500px))] gap-6 my-4'>
             <SubredditContainer
               data={data}
               subreddit_name={subreddit_name}

@@ -8,7 +8,7 @@ import SubredditCard from "./SubredditCard";
  */
 function SubredditContainer({ data, subreddit_name, subreddit_subscribers }) {
   return (
-    <article className=''>
+    <article className='border p-2 rounded-lg'>
       <header className='flex flex-row items-center justify-between'>
         <div>
           <p className='text-lg'>
