@@ -23,8 +23,17 @@ function App() {
           </main>
         )}
       </section>
-      <footer className='' id='footer'>
-        Footer
+      <footer className='text-center' id='footer'>
+        <p>
+          Creado con ♥️ por{" "}
+          <a
+            className='hover:opacity-70 transition duration-100'
+            href='https://github.com/luisldev'
+            target='_blank'
+          >
+            Luis López
+          </a>
+        </p>
       </footer>
     </main>
   );
