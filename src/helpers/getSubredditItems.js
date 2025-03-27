@@ -15,9 +15,10 @@ function getSubredditItems(response) {
         permalink: `https://www.reddit.com${item.data.permalink}`
     }));
 
-    const subreddit_name = response.data.children[0]?.data?.subreddit_name_prefixed || "Desconocido";
-    const subreddit_subscribers = response.data.children[0]?.data?.subreddit_subscribers || 0;
-
+    const subreddit_name =
+      response.data.children[0]?.data?.subreddit_name_prefixed || "Desconocido";
+    const subreddit_subscribers =
+      response.data.children[0]?.data?.subreddit_subscribers || 0;
     return { data, subreddit_name, subreddit_subscribers };
 }
 
