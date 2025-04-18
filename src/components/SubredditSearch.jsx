@@ -3,12 +3,12 @@ import CancelIcon from "./icons/CancelIcon";
 import getSubreddit from "../helpers/getSubreddit";
 import { useSearchStore } from "../store/useSearchStore";
 import { useSubredditStore } from "../store/useSubredditStore";
+import { useState } from "react";
 
 function SubredditSearch() {
+  const [isSearching, setIsSearching] = useState(false);
   const { inputSearch, addInputSearch } = useSearchStore();
-
-  const { error, isOpen, setIsOpen, setError, isSearching } =
-    useSubredditStore();
+  const { error, isOpen, setIsOpen, setError } = useSubredditStore();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -20,8 +20,13 @@ function SubredditSearch() {
       setError("Esto ya lo haz buscado la última vez. intenta algo nuevo");
       return;
     }
+    setIsSearching(true);
     addInputSearch(subredditInput);
-    getSubreddit(subredditInput);
+    getSubreddit(subredditInput, { refresh: false, loadingKey: false }).finally(
+      () => {
+        setIsSearching(false);
+      }
+    );
   }
 
   return (
@@ -76,15 +81,16 @@ function SubredditSearch() {
                     required
                   />
                   {error && (
-                    <p className='text-red-400 text-xs text-center text-balance max-w-52'>
+                    <p className='text-red-400 text-xs text-center text-balance max-w-56'>
                       {error}
                     </p>
                   )}
                   <button
-                    className={
-                      "font-semibold text-white/90 w-full  px-2 py-1 rounded-lg bg-blue-500 hover:bg-blue-400 transition-colors duration-100 ease-in"
-                    }
+                    className={`font-semibold text-white/90 w-full px-2 py-1 rounded-lg bg-blue-500 hover:bg-blue-400 transition-colors duration-100 ease-in ${
+                      isSearching ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                     type='submit'
+                    disabled={isSearching}
                   >
                     {isSearching ? "Buscando..." : "Agregar Subreddit"}
                   </button>

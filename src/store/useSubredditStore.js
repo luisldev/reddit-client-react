@@ -6,17 +6,11 @@ export const useSubredditStore = create()(
     (set, get) => ({
       searchResults: [],
       error: "",
-      isSearching: false,
       isOpen: false,
 
       setError: (state) =>
         set(() => ({
           error: state,
-        })),
-
-      setIsSearching: (state) =>
-        set(() => ({
-          isSearching: state,
         })),
 
       setIsOpen: (state) =>

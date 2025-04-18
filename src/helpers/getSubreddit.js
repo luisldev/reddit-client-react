@@ -1,38 +1,54 @@
-import getSubredditItems from "../helpers/getSubredditItems"
-import useSubredditStore from '../store/useSubredditStore';
+import getSubredditItems from "../helpers/getSubredditItems";
+import { useSubredditStore } from "../store/useSubredditStore";
 
-function getSubreddit(subreddit) {
+export default function getSubreddit(subreddit, { refresh = false } = {}) {
   const {
-    setError,
-    setIsOpen,
-    setIsSearching,
     addSearchResult,
+    updateSearchResult,
+    setError,
+    searchResults,
+    setIsOpen,
   } = useSubredditStore.getState();
-  setError('')
-  setIsSearching(true)
-  fetch(`https://www.reddit.com/r/${subreddit}.json`)
-  .then((res) => {
-    if (!res.ok) {
-      if (res.status == 404) {
+
+  setError("");
+
+  return fetch(`https://www.reddit.com/r/${subreddit}.json`)
+    .then((res) => {
+      const contentType = res.headers.get("content-type");
+
+      if (!res.ok || !contentType?.includes("application/json")) {
         throw new Error(
-          "Subreddit no encontrado, use otras palabras e inténtelo de nuevo"
+          "Subreddit no encontrado o respuesta no válida. Intenta con otro nombre."
         );
       }
-      throw new Error("Revise su conexió a Internet e inténtelo de nuevo");
-    }
-    return res.json();
-  })
-  .then((response) => {
-    const subredditItems = getSubredditItems(response);
-    addSearchResult(subreddit, subredditItems);
-    setIsOpen(false);
-  })
-  .catch((err) => {
-    setError(err.message);
-  })
-  .finally(() => {
-    setIsSearching(false);
-  });
-}
 
-export default getSubreddit;
+      return res.json();
+    })
+    .then((response) => {
+      if (
+        !response.data ||
+        !response.data.children ||
+        response.data.children.length === 0
+      ) {
+        throw new Error(
+          "Este subreddit no contiene publicaciones o no existe."
+        );
+      }
+
+      const subredditItems = getSubredditItems(response);
+      const exists = searchResults.some(
+        (res) => res.query.toLowerCase() === subreddit.toLowerCase()
+      );
+
+      if (refresh && exists) {
+        updateSearchResult(subreddit, subredditItems);
+      } else {
+        addSearchResult(subreddit, subredditItems);
+      }
+
+      setIsOpen(false);
+    })
+    .catch((err) => {
+      setError(err.message || "Ocurrió un error desconocido.");
+    });
+}

@@ -6,7 +6,7 @@ function SubredditCard({ author, date, title, votes, comments, permalink }) {
   return (
     <>
       <hr className='border-[0.5px] border-neutral-200 dark:border-neutral-700' />
-      <section className='my-0.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-xl'>
+      <section className='my-0.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-xl'>
         <header>
           <h3 className='text-xs'>
             <a href={`https://www.reddit.com/user/${author}`} target='_blank'>
