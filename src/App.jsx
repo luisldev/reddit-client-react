@@ -16,7 +16,7 @@ function App() {
           <SubredditSearch />
         </header>
         {searchResults.length > 0 && (
-          <main className='grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(350px,500px))] gap-2 my-4'>
+          <main className='grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2 my-4'>
             {searchResults.map((result) => {
               return (
                 <SubredditContainer
